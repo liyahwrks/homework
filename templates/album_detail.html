@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}{{ album.title }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <a href="/" class="btn btn-secondary mb-4">← Back</a>
+    
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <img src="{{ album.picture_path }}" 
+                 class="img-fluid rounded shadow" 
+                 alt="{{ album.title }}">
+        </div>
+        
+        <div class="col-md-6">
+            <h1>{{ album.title }}</h1>
+            <p class="text-muted">Year: {{ album.year }}</p>
+            <p class="h3 text-success mb-4">Price: {{ album.price }} ₽</p>
+            <p>{{ album.description }}</p>
+            <button class="btn btn-danger btn-lg">Buy Now</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

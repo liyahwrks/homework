@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Заголовок -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-dark mb-3">BLACKPINK Albums</h1>
+        <p class="lead text-muted">Official discography. Collect all albums!</p>
+    </div>
+
+    <!-- Сетка альбомов -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        {% for album in albums %}
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <!-- Обложка альбома -->
+                <div style="height: 250px; overflow: hidden;">
+                    {% if album.picture_path %}
+                    <img src="{{ album.picture_path }}" 
+                         class="card-img-top h-100 w-100 object-fit-cover" 
+                         alt="{{ album.title }}">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" 
+                         class="card-img-top h-100 w-100 object-fit-cover" 
+                         alt="{{ album.title }}">
+                    {% endif %}
+                </div>
+                
+                <div class="card-body d-flex flex-column">
+                    <!-- Название и год -->
+                    <h5 class="card-title">{{ album.title }}</h5>
+                    <p class="text-muted mb-2">
+                        <i class="bi bi-calendar3"></i> {{ album.year }}
+                    </p>
+                    
+                    <!-- Описание -->
+                    <p class="card-text flex-grow-1 small text-muted">
+                        {{ album.description|truncate(150) }}
+                    </p>
+                    
+                    <!-- Цена и кнопка -->
+                    <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                        <div>
+                            <span class="h4 fw-bold text-dark">{{ album.price }} ₽</span>
+                        </div>
+                        <a href="/albums/{{ album.id }}/" 
+                            class="btn btn-dark btn-sm px-3" 
+                            role="button">
+                                <i class="bi bi-cart3"></i> Купить
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Сообщение если нет альбомов -->
+    {% if not albums %}
+    <div class="text-center py-5">
+        <h3 class="text-muted">No albums available</h3>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Bootstrap Icons (добавьте в base.html или здесь) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+<style>
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+    .card-img-top {
+        object-fit: cover;
+    }
+</style>
+{% endblock %}
